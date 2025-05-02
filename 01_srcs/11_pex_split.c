@@ -6,34 +6,42 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:40:33 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/03/11 16:29:08 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:22:28 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 
-static int	_word_len(const char *str)
+char		**pex_pipe_split(char const *str);
+static int	_word_len(const char *str);
+static int	_pipe_countsegment(const char *str);
+static char	**_pipe_freeall(char **arr);
+static int	_makesegment(char **arr, char const **str, int sec);
+
+char	**pex_pipe_split(char const *str)
 {
-	char	tmp;
+	char	**arr;
 	int		i;
 
+	i = _pipe_countsegment(str);
+	if (i == -1)
+		return (NULL);
+	arr = malloc((i + 1) * sizeof(char *));
+	if (arr == NULL)
+		return (NULL);
 	i = 0;
-	while (str[i] && str[i] != ' ')
+	while (*str != '\0')
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			tmp = str[i];
-			i++;
-			while (str[i] != '\0' && !(str[i] == tmp && str[i - 1] != '\\'))
-				i++;
-			if (str[i] == '\0')
-				return (pex_putstr_int("quote>\n"));
-			i++;
-		}
-		else
-			i++;
+		while (*str == ' ')
+			str++;
+		if (*str == '\0')
+			break ;
+		if (_makesegment(arr, &str, i) == -1)
+			return (_pipe_freeall(arr));
+		i++;
 	}
-	return (i);
+	arr[i] = NULL;
+	return (arr);
 }
 
 static int	_pipe_countsegment(const char *str)
@@ -60,21 +68,31 @@ static int	_pipe_countsegment(const char *str)
 	return (count);
 }
 
-static char	**_pipe_freeall(char **arr)
+static int	_word_len(const char *str)
 {
-	int	i;
+	char	tmp;
+	int		i;
 
 	i = 0;
-	while (arr[i] != NULL)
+	while (str[i] && str[i] != ' ')
 	{
-		free(arr[i]);
-		i++;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			tmp = str[i];
+			i++;
+			while (str[i] != '\0' && !(str[i] == tmp && str[i - 1] != '\\'))
+				i++;
+			if (str[i] == '\0')
+				return (pex_putstr_int("quote>\n"));
+			i++;
+		}
+		else
+			i++;
 	}
-	free(arr);
-	return (NULL);
+	return (i);
 }
 
-int	_makesegment(char **arr, char const **str, int sec)
+static int	_makesegment(char **arr, char const **str, int sec)
 {
 	int	seglen;
 
@@ -89,28 +107,16 @@ int	_makesegment(char **arr, char const **str, int sec)
 	return (0);
 }
 
-char	**pex_pipe_split(char const *str)
+static char	**_pipe_freeall(char **arr)
 {
-	char	**arr;
-	int		i;
+	int	i;
 
-	i = _pipe_countsegment(str);
-	if (i == -1)
-		return (NULL);
-	arr = malloc((i + 1) * sizeof(char *));
-	if (arr == NULL)
-		return (NULL);
 	i = 0;
-	while (*str != '\0')
+	while (arr[i] != NULL)
 	{
-		while (*str == ' ')
-			str++;
-		if (*str == '\0')
-			break ;
-		if (_makesegment(arr, &str, i) == -1)
-			return (_pipe_freeall(arr));
+		free(arr[i]);
 		i++;
 	}
-	arr[i] = NULL;
-	return (arr);
+	free(arr);
+	return (NULL);
 }

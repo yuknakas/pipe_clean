@@ -6,11 +6,17 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:42:30 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/03/12 13:30:29 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:20:11 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
+
+int		pex_putstr_int(char *str);
+int		pex_puterror(char *str);
+int		pex_file_error(char *file_name);
+int		pex_cmd_error(char *cmd_name);
+void	_freearr(char **arr);
 
 int	pex_putstr_int(char *str)
 {

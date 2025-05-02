@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   12_handle_quote.c                                  :+:      :+:    :+:   */
+/*   12_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 16:12:33 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/04/30 17:07:55 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:22:52 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
+
+void	_rm_quote(char *str);
+void	_free_content(t_cmd *tool);
+void	_close_fds(int **pipe_fd, int i);
+void	_free_int_arr(int **arr);
 
 void	_rm_quote(char *str)
 {
@@ -50,4 +55,17 @@ void	_close_fds(int **pipe_fd, int i)
 		close(pipe_fd[i][1]);
 		i++;
 	}
+}
+
+void	_free_int_arr(int **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }

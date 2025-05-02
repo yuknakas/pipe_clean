@@ -1,16 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   03_first_process.c                                 :+:      :+:    :+:   */
+/*   04_process.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 15:04:00 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/04/30 17:08:36 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:18:01 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
+
+int	pex_first_process(t_cmd *tool);
+int	pex_middle_process(t_cmd *tool, char *cmd_name, int cmd_count);
+int	pex_last_process(t_cmd *tool);
 
 int	pex_first_process(t_cmd *tool)
 {
@@ -33,12 +37,12 @@ int	pex_first_process(t_cmd *tool)
 	return (_execute(first_cmd, tool->p_envp));
 }
 
-int	pex_middle_process(char *cmd1, char **envp, int **p_fd, int cmd_count)
+int	pex_middle_process(t_cmd *tool, char *cmd_name, int cmd_count)
 {
-	dup2(p_fd[cmd_count - 1][0], STDIN_FILENO);
-	dup2(p_fd[cmd_count][1], STDOUT_FILENO);
-	_close_fds(p_fd, 0);
-	return (_execute(cmd1, envp));
+	dup2(tool->pipe_fd[cmd_count - 1][0], STDIN_FILENO);
+	dup2(tool->pipe_fd[cmd_count][1], STDOUT_FILENO);
+	_close_fds(tool->pipe_fd, 0);
+	return (_execute(cmd_name, tool->p_envp));
 }
 
 int	pex_last_process(t_cmd *tool)

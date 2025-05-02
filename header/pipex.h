@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.h                                      :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:06:32 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/04/30 16:47:29 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:30:15 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_BONUS_H
-# define PIPEX_BONUS_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include "../00_libft/gnl/get_next_line.h"
 # include <unistd.h>
@@ -39,33 +39,33 @@ typedef struct s_cmd
 
 //main
 int		main(int argc, char **argv, char **envp);
-void	pex_pipex(t_cmd *tool);
 
-int		_pipex(t_cmd *tool);
+//forks
+void	pex_pipex(t_cmd *tool);
 void	_first_cmd(t_cmd *t, int heredoc);
-void	_middle_cmd(t_cmd *t, int cmd);
+void	_middle_cmd(t_cmd *t, int cmd_nb);
 void	_last_cmd(t_cmd *t, int cmd, int append);
 
-//processes
-int		pex_first_process(char *input, char *cmd1, char **envp, int **p_fd);
-int		pex_middle_process(char *cmd1, char **envp, int **p_fd, int cmd_count);
-int		pex_last_process(char *output, char *cmd2, t_cmd *tool);
-int		_execute(char *command, char **envp);
-
-//heredoc
-int		pex_bon_heredoc(t_cmd *tool);
+//sorting fds
+int		pex_first_process(t_cmd *tool);
+int		pex_middle_process(t_cmd *tool, char *cmd_name, int cmd_count);
+int		pex_last_process(t_cmd *tool);
 int		pex_heredoc(char *limiter, int **p_fd);
 int		pex_append(char *output, t_cmd *tool);
 
-//utils
+//execution
+int		_execute(char *command, char **envp);
 char	**pex_pipe_split(char const *str);
-void	_rm_quote(char *str);
+
+//errors & utils
 int		pex_putstr_int(char *str);
 int		pex_puterror(char *str);
 int		pex_file_error(char *file_name);
+int		pex_cmd_error(char *cmd_name);
 void	_freearr(char **arr);
-void	_free_int_arr(int **arr);
-void	_close_fds(int **pipe_fd, int i);
+void	_rm_quote(char *str);
 void	_free_content(t_cmd *tool);
+void	_close_fds(int **pipe_fd, int i);
+void	_free_int_arr(int **arr);
 
 #endif

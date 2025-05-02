@@ -6,21 +6,24 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:44:52 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/04/30 17:08:31 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:34:21 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/pipex.h"
 
 void		pex_pipex(t_cmd *tool);
-static void	_single_process(t_cmd *tool);
+static int	_single_process(t_cmd *tool);
 
 void	pex_pipex(t_cmd *tool)
 {
 	int	i;
 
 	if (tool->p_argc == 4 && tool->is_heredoc == NO)
-		return (_single_process(tool));
+	{
+		_single_process(tool);
+		return ;
+	}
 	_first_cmd(tool, tool->is_heredoc);
 	i = 1;
 	while (i < (tool->p_argc - 4))
@@ -32,7 +35,7 @@ void	pex_pipex(t_cmd *tool)
 	i++;
 }
 
-static void	_single_process(t_cmd *tool)
+static int	_single_process(t_cmd *tool)
 {
 	int	fd_input;
 	int	fd_output;
@@ -41,10 +44,10 @@ static void	_single_process(t_cmd *tool)
 	if (tool->fork_id[0] == -1)
 	{
 		pex_puterror("Fork Failed");
-		return ;
+		return (-1);
 	}
 	if (tool->fork_id[0] != 0)
-		return ;
+		return (-1);
 	fd_input = open(tool->p_argv[1], O_RDONLY);
 	if (fd_input == -1)
 		return (pex_file_error(tool->p_argv[1]));

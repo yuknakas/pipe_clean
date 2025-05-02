@@ -6,12 +6,13 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:30:45 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/04/30 16:51:25 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 09:35:14 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/pipex_bonus.h"
+#include "../header/pipex.h"
 
+int			main(int argc, char **argv, char **envp);
 static int	_set_variables(t_cmd *tool, int argc, char **argv, char **envp);
 static int	**_allocate_pipe_fork(t_cmd *tool);
 static void	_make_pipe(t_cmd *tool, int pipe_count);
@@ -43,7 +44,7 @@ static int	_set_variables(t_cmd *tool, int argc, char **argv, char **envp)
 	tool->p_envp = envp;
 	tool->fork_count = argc - 3;
 	tool->is_heredoc = NO;
-	if (ft_strncmp(argv[1], "here_doc", 9))
+	if (!ft_strncmp(argv[1], "here_doc", 9))
 	{
 		tool->fork_count = argc - 2;
 		tool->is_heredoc = YES;
