@@ -6,7 +6,7 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:55:57 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/05/02 12:40:26 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:02:27 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	pex_heredoc(char *limiter, int **p_fd)
 	limit_nl = ft_strjoin(limiter, "\n\0");
 	while (line && ft_strncmp(line, limit_nl, INT_MAX))
 	{
-		ft_putstr_fd(line, p_fd[0][1]);
+		ft_putstr_fd(line, STDOUT_FILENO);
 		write(STDERR_FILENO, "> ", 2);
 		free(line);
 		line = get_next_line(STDIN_FILENO, NO);
