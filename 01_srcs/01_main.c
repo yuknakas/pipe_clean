@@ -6,7 +6,7 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 16:30:45 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/05/02 12:12:39 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:57:26 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static int	_wait_all_pids(t_cmd *tool)
 		i++;
 	}
 	status = WEXITSTATUS(status);
-	if (ft_strncmp(tool->p_argv[1], "here_doc", 9))
+	if (tool->is_heredoc)
 		status = WEXITSTATUS(status_tmp);
 	return (status);
 }
