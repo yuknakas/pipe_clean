@@ -6,7 +6,7 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 14:44:52 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/05/02 09:34:21 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/02 10:19:50 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	pex_pipex(t_cmd *tool)
 	}
 	_first_cmd(tool, tool->is_heredoc);
 	i = 1;
-	while (i < (tool->p_argc - 4))
+	while (i < (tool->p_argc - 4 + tool->is_heredoc))
 	{
 		_middle_cmd(tool, i);
 		i++;
 	}
-	_last_cmd(tool, i, tool->is_heredoc);
+	_last_cmd(tool, tool->is_heredoc);
 	i++;
 }
 

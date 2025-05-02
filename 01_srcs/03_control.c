@@ -14,7 +14,7 @@
 
 void	_first_cmd(t_cmd *t, int heredoc);
 void	_middle_cmd(t_cmd *t, int cmd_nb);
-void	_last_cmd(t_cmd *t, int cmd, int append);
+void	_last_cmd(t_cmd *t, int append);
 
 void	_first_cmd(t_cmd *tool, int heredoc)
 {
@@ -61,21 +61,21 @@ void	_middle_cmd(t_cmd *tool, int cmd_nb)
 	}
 }
 
-void	_last_cmd(t_cmd *tool, int cmd, int append)
+void	_last_cmd(t_cmd *tool, int append)
 {
 	int		i;
 	char	*last_cmd;
 	char	*output;
 
-	tool->fork_id[cmd] = fork();
-	if (tool->fork_id[cmd] == -1)
+	tool->fork_id[tool->fork_count - 1] = fork();
+	if (tool->fork_id[tool->fork_count - 1] == -1)
 	{
 		pex_puterror("Fork Failed");
 		return ;
 	}
-	last_cmd = tool->p_argv[cmd + 1];
+	last_cmd = tool->p_argv[tool->p_argc - 2];
 	output = tool->p_argv[tool->p_argc - 1];
-	if (tool->fork_id[cmd] == 0)
+	if (tool->fork_id[tool->fork_count - 1] == 0)
 	{
 		if (append == YES)
 			i = pex_append(output, tool);
