@@ -98,9 +98,9 @@ char	*get_next_line(int fd, int clean)
 	static char	*line_buffer[1023];
 	char		*current_line;
 
-	if (clean == YES)
+	if (clean)
 		gnl_free_double_pointer(line_buffer);
-	if (fd < 0 || BUFFER_SIZE <= 0 || clean == YES)
+	if (fd < 0 || BUFFER_SIZE <= 0 || clean)
 		return (NULL);
 	line_buffer[fd] = _readfile(fd, line_buffer[fd]);
 	if (line_buffer[fd] == NULL)

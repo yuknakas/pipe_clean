@@ -19,8 +19,8 @@
 # include <limits.h>
 # include <stdint.h>
 
-# define YES 0
-# define NO 1
+# define YES 1
+# define NO 0
 
 int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
