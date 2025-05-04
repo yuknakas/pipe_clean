@@ -6,7 +6,7 @@
 /*   By: yuknakas <yuknakas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 15:55:57 by yuknakas          #+#    #+#             */
-/*   Updated: 2025/05/02 13:02:27 by yuknakas         ###   ########.fr       */
+/*   Updated: 2025/05/04 21:37:01 by yuknakas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	pex_append(char *output, t_cmd *tool)
 {
 	int	fd_output;
 
-	fd_output = open(output, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	fd_output = open(output, O_CREAT | O_WRONLY | O_APPEND, 0777);
 	if (fd_output == -1)
 	{
 		pex_file_error(output);
